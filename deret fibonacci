@@ -1,0 +1,49 @@
+#include <iostream>
+#include <chrono>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+long long fibonacci_recursive(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2);
+}
+
+
+long long fibonacci_dp(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    vector<long long> fib(n + 1, 0);
+    fib[1] = 1;
+    for (int i = 2; i <= n; ++i) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib[n];
+}
+
+
+void measure_time(long long (*func)(int), int n, double &time_taken) {
+    auto start = chrono::high_resolution_clock::now();
+    func(n);
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = end - start;
+    time_taken = duration.count();
+}
+
+int main() {
+    vector<int> test_values = {10, 25, 30, 40, 50};
+    double time_recursive, time_dp;
+
+    cout << "n\tRecursive (s)\tDynamic Programming (s)" << endl;
+
+    for (int n : test_values) {
+        measure_time(fibonacci_recursive, n, time_recursive);
+        measure_time(fibonacci_dp, n, time_dp);
+        cout << n << "\t" << fixed << setprecision(6) << time_recursive << "\t\t" << time_dp << endl;
+    }
+
+    return 0;
+}
