@@ -1,0 +1,22 @@
+import matplotlib.pyplot as plt
+
+n_values = [10, 25, 30, 40, 50]
+recursive_times = [ 0.000000,0.000995,0.007974,0.916102, 131.545525]  
+dp_times = [0.000003, 0.000001, 0.000005, 0.000005, 0.000010]  
+
+plt.figure(figsize=(10, 5))
+
+
+plt.plot(n_values[:-1], recursive_times[:-1], label='Rekursif', marker='o')
+plt.scatter(n_values[-1], 10, color='red', label='Timeout (Rekursif)')
+
+
+plt.plot(n_values, dp_times, label='Dynamic Programming', marker='o')
+
+plt.xlabel('Nilai n')
+plt.ylabel('Waktu Eksekusi (detik)')
+plt.title('Perbandingan Waktu Eksekusi Fibonacci: Rekursif vs Dynamic Programming')
+plt.legend()
+plt.grid(True)
+plt.yscale('log') 
+plt.show()
